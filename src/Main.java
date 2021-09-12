@@ -22,19 +22,21 @@ public class Main {
 
         System.out.println("\nExcercise 1, group by class and sort dem.");
         List<Student> students = getStudentsFromFile("Dat20Bstuderende.csv");
+        students.stream().sorted(Comparator.comparing(Student::getLastName))
+                        .sorted(Comparator.comparing(Student::getClassOrigin))
+                                .forEach(System.out::println);
+
+        System.out.println("\nOR group them in a map? \n");
         // group by class in a map
         Map<String, List<Student>> studentsPerClass = students.stream()
                 .sorted(Comparator.comparing(Student::getLastName))
                 .collect(Collectors.groupingBy(Student::getClassOrigin));
         System.out.println(studentsPerClass);
 
-
         System.out.println("\nExcercise 2, print total students after grouping by class:");
-        // count the students
-        Map<String, Integer> amountOfStudentsPerClass = new HashMap<>();
-        for (String str : studentsPerClass.keySet()) {
-            amountOfStudentsPerClass.put(str, studentsPerClass.get(str).size());
-        }
-        System.out.println(amountOfStudentsPerClass);
+        studentsPerClass.values().forEach(list ->
+                        System.out.println("Total in class " + list.get(0).getClassOrigin()
+                                + ": " + list.stream().count()));
+
     }
 }

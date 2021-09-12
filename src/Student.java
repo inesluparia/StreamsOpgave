@@ -14,8 +14,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "\n" + lastName
-                ;
+        return "\n" + lastName + ", class " + classOrigin;
     }
 
     public String getUserName() {
