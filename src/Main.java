@@ -8,17 +8,20 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    public static Function<String, Student> mapToItem = (line) -> {
+    public static Function<String, Student> mapToStudent = (line) -> {
         String[] array = line.split(";");
         return new Student(array[0], array[1], array[2], array[3]);
     };
 
-    public static List<Student> getStudentsFromFile(String file) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8));
-        return bufferedReader.lines().skip(1).map(mapToItem).collect(Collectors.toList());
+    public static List<Student> getStudentsFromFile(String file) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8));) {
+            return bufferedReader.lines().skip(1).map(mapToStudent).collect(Collectors.toList());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } return null;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         System.out.println("\nExcercise 1, group by class and sort dem.");
         List<Student> students = getStudentsFromFile("Dat20Bstuderende.csv");

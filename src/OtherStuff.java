@@ -23,7 +23,7 @@ public class OtherStuff {
             System.out.println("\nprinting lastnames of students from class B: ");
             BufferedReader bufferedReader1 = new BufferedReader(new FileReader("Dat20Bstuderende.csv", StandardCharsets.UTF_8));
             bufferedReader1.lines()
-                    .map(Main.mapToItem)
+                    .map(Main.mapToStudent)
                     .filter(student -> student.getClassOrigin().equals("B"))
                     .forEach(s -> System.out.println(s.getLastName()));
         } catch (IOException e) {
@@ -34,14 +34,14 @@ public class OtherStuff {
     public void TestingMapToItemFunction(){
         System.out.println("Testing mapToItem function...");
         Stream<String> testLine = Stream.of("pete46m9@stud.kea.dk;Peter Ross;Larsen;B");
-        testLine.map(Main.mapToItem).forEach(student -> {System.out.println(student.getFirstName());});
+        testLine.map(Main.mapToStudent).forEach(student -> {System.out.println(student.getFirstName());});
     }
 
     public void printStudentsInFormattedString() throws IOException {
         System.out.println("\nprinting a list of the students in a formatted string: ");
         BufferedReader bufferedReader3 = new BufferedReader(new FileReader("Dat20Bstuderende.csv", StandardCharsets.UTF_8));
         bufferedReader3.lines()
-                .map(Main.mapToItem)
+                .map(Main.mapToStudent)
                 .map(student -> String.format("Student lastname: %s, Origin class:%s", student.getLastName(), student.getClassOrigin()))
                 .forEach(System.out::println);
     }
